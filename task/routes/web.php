@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin', ['as' => 'admin', 'uses' => 'UserController@index']);
+Route::post('/login', ['as' => 'login', 'uses' => 'AdminController@login']);
