@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Forms;
 class UserController extends Controller
 {
     /**
@@ -13,17 +13,24 @@ class UserController extends Controller
      */
     public function index()
     {
+
+        $forms = DB::table('forms')->get();
        return view('admin');
     }
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function submit(Request $request)
     {
-        //
+        $input = $request->all();
+
+       $form = new Forms();
+        $form->field = $input;
+        $form->save();
+        return view('welcome');
     }
 
     /**

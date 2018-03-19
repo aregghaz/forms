@@ -21,9 +21,13 @@
         <div class="col-md-12 " id="createForm">
 
         </div>
-            <div class="col-md-12 " id="previewForm">
+            <form action="{{ route('submit') }}" method="post">
+                <div class="col-md-12 " id="previewForm">
+                </div>
+                <button type="submit">asdasdasdasd</button>
+                <input type="hidden" name="_token" value="{{  Session::token() }}">
+            </form>
 
-        </div>
 
 
         </div>
@@ -60,19 +64,19 @@ $('#createForm').append('<input type="text" id="nameField" ><button type="submit
                     $('#previewForm').append('   <div class="form-group">' +
                         '                <label for="inputEmail3" class="col-sm-2 control-label">Password</label>' +
                         '                <div class="col-sm-10">' +
-                        '                    <input type="password" class="form-control" name="email"  placeholder="Password">' +
+                        '                    <input type="password" class="form-control" name="'+nameField +'"  placeholder="Password">' +
                         '                </div>' +
                         '            </div>');
                 }else {
                     $('#previewForm').append('   <div class="form-group">' +
                         '                <label for="inputEmail3" class="col-sm-2 control-label">'+ nameField +'</label>' +
                         '                <div class="col-sm-10">' +
-                        '                    <input type="email" class="form-control" name="email"  placeholder="'+nameField+'">' +
+                        '                    <input type="text" class="form-control" name="'+nameField +'"  placeholder="'+nameField+'">' +
                         '                </div>' +
                         '            </div>')  ;
                 }
-                console.log($("#previewForm > div").length);
-
+                $('#previewForm').append('<input type="hidden" name="_token" value="{{  Session::token() }}">');
+$('#nameField').val('');
             })
         })
 
