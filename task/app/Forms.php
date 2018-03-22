@@ -9,4 +9,9 @@ class Forms extends Model
     protected $casts = [
         'field' => 'array',
     ];
+    protected $fillable = [
+        'formName',
+        'field',
+
+    ];
 }

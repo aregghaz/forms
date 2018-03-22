@@ -2,90 +2,97 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Answers;
 use App\Forms;
+use DB;
+use Illuminate\Http\Request;
+
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-        $forms = DB::table('forms')->get();
-       return view('admin');
-    }
 
     /**
      * Show the form for creating a new resource.
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function submit(Request $request)
     {
-        $input = $request->all();
 
-       $form = new Forms();
-        $form->field = $input;
+        $inputs = $request->all();
+        $count = 0;
+        $data = Array();
+        foreach ($inputs as $key => $value) {
+            if ($key !== 'formName' and $key !== '_token') {
+                $data[$count] = $key;
+                $count++;
+            }
+
+        }
+
+        $form = new Forms();
+        $form->field = $data;
+        $form->formName = $inputs["formName"];
         $form->save();
-        return view('welcome');
+        return redirect('login');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function home(Request $request)
     {
-        //
+        $forms = DB::table('forms')->get();
+        return view('welcome', ['forms' => $forms]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function submitForm(Request $request)
     {
-        //
+        $answers = new Answers();
+        $inputs = $request->all();
+        $ip =$request->ip();
+
+        $count = 0;
+        $data = Array();
+        foreach ($inputs as $key => $value) {
+            if ( $key!== 'formId' and $key !== '_token') {
+                $data[$count] = $value;
+                $count++;
+            }
+
+        }
+        $answers->field_answers = $data;
+        $answers->formId = $inputs["formId"];
+        $answers->ip_address = $ip;
+        $answers->save();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $formName = $request['formName'];
+        $data = $request['data'];
+        $id = $request['formId'];
+        $form = Forms::find($id);
+        $form->field = $data;
+        $form->formName = $formName;
+        $form->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

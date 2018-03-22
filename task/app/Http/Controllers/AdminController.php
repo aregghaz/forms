@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+use DB;
 class AdminController extends Controller
 {
     /**
@@ -13,13 +14,11 @@ class AdminController extends Controller
      */
     public function login(Request $request)
     {
-        $email = $request['email'];
-        $password = $request['password'];
-        if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
-            // Authentication passed...
-            return view('form');
-        }
-        return view('dashboard');
+
+        $forms = DB::table('forms')->get();
+        $answers = DB::table('answers')->join('forms', 'answers.formId', '=', 'forms.id')->get();
+
+                 return view('form',['forms' => $forms,'answers' =>   $answers]);
     }
 
     /**

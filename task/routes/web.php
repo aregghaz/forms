@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin', ['as' => 'admin', 'uses' => 'UserController@index']);
-Route::post('/login', ['as' => 'login', 'uses' => 'AdminController@login']);
+Route::get('/', ['as' => 'home', 'uses' => 'UserController@home']);
+Route::get('/login', ['as' => 'login', 'uses' => 'AdminController@login']);
 Route::post('/submit', ['as' => 'submit', 'uses' => 'UserController@submit']);
+Route::post('/submitForm', ['as' => 'submitForm', 'uses' => 'UserController@submitForm']);
+Route::post('/saveChanges', ['as' => 'saveChanges', 'uses' => 'UserController@update']);
