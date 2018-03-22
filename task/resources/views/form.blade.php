@@ -271,9 +271,9 @@
             if (formAnswer !== undefined) {
 
                 drawDiv.append('<input type="hidden" id="formId" value="' + formId + '"> ');
-                $('#createFormsSubmited').append('<input type="text" id="newFormName" value="' + formName + '"> ');
+                $('#createFormsSubmited').append('<input type="text" id="newFormName" value="' + formName + '" readonly> ');
                 for (var i = 0; i < formLenght; i++) {
-                    drawDiv.append('<div class="form-group"><label for="' + formItem[i] + '">' + formItem[i] + '</label><input type="text" class="form-control" name="' + formItem[i] + '" id="' + formItem[i] + '" value="' + formAnswer[i] + '"> </div>')
+                    drawDiv.append('<div class="form-group"><label for="' + formItem[i] + '">' + formItem[i] + '</label><input type="text" class="form-control" name="' + formItem[i] + '" id="' + formItem[i] + '" value="' + formAnswer[i] + '" readonly> </div>')
 
                 }
             } else {
